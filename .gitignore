@@ -1,10 +1,10 @@
-.idea
-node_modules
+*.idea
+**/node_modules
 **/npm-debug.log
 
 # OS
-.DS_Store
+*.DS_Store
 
 # Misc
 *.swp
-release.properties
+**/release.properties
