@@ -13,23 +13,29 @@
         }
     }
 
-    var request = function(url, method, data, contentType) {
+    var request = function(url, method, data) {
         var xhr = new XMLHttpRequest();
-        var cType = "application/json; charset=utf-8";
-        if(contentType) cType = contentType;
-        xhr.open(method, url);
-        xhr.setRequestHeader("Content-type", cType);
+        xhr.open(method, url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(data);
+        
+        xhr.onload = function() {
+            console.log(`Loaded: ${xhr.status} ${xhr.response}`);
+        };
+
+        xhr.onerror = function() {
+            console.log(`Network Error`);
+        };
     }
 
-    var c1 = new Collector();
+    var collector = new Collector();
 
     var data = JSON.stringify({
-        userAgent: c1.getUserAgent(),
-        publicIP: c1.getPublicIP(),
-        localIP: c1.getLocalIP()
+        userAgent: collector.getUserAgent(),
+        publicIP: collector.getPublicIP(),
+        localIP: collector.getLocalIP()
     });
-
-    request(pushUrl, "POST", "name=Nazmul&age=38", "application/x-www-form-urlencoded");
+    
+    request(pushUrl, "POST", data);
 
 })("http://localhost:8082/api/push");
