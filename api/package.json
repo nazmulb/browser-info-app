@@ -66,6 +66,7 @@
     "coverageDirectory": "../coverage",
     "collectCoverageFrom": [
       "**/**.controller.ts",
+      "**/**.service.ts",
       "!**/node_modules/**",
       "!**/vendor/**"
     ],

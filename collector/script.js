@@ -20,15 +20,15 @@
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.send(data);
         } catch (e){
-            console.log(`error: ${e.message}`);
+            console.log("error: " + e.message);
         }
         
         xhr.onload = function() {
-            console.log(`Loaded: ${xhr.status} ${xhr.response}`);
+            console.log("Loaded: " + xhr.status + " " + xhr.response);
         };
 
         xhr.onerror = function() {
-            console.log(`Network Error`);
+            console.log("Network Error");
         };
     }
 
@@ -36,10 +36,9 @@
 
     var data = JSON.stringify({
         userAgent: collector.getUserAgent(),
-        publicIP: collector.getPublicIP(),
-        localIP: collector.getLocalIP()
+        ipAddresses: collector.getPublicIP() + "," + collector.getLocalIP()
     });
     
     request(pushUrl, "POST", data);
 
-})("http://localhost:8082/api/push");
+})("http://localhost:8082/push");
