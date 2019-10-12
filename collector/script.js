@@ -9,15 +9,19 @@
         }
 
         this.getLocalIP = function() {
-            return "192.168.0.10";
+            return "192.168.0.5";
         }
     }
 
     var request = function(url, method, data) {
-        var xhr = new XMLHttpRequest();
-        xhr.open(method, url, true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(data);
+        try {
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, url, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send(data);
+        } catch (e){
+            console.log(`error: ${e.message}`);
+        }
         
         xhr.onload = function() {
             console.log(`Loaded: ${xhr.status} ${xhr.response}`);
