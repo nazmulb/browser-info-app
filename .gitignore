@@ -1,6 +1,9 @@
 *.idea
 **/node_modules
 **/npm-debug.log
+**/logs
+*.log
+**/data
 
 # OS
 *.DS_Store
