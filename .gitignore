@@ -4,6 +4,8 @@
 **/logs
 *.log
 **/data
+**/coverage
+**/reports
 
 # OS
 *.DS_Store
