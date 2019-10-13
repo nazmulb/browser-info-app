@@ -31,7 +31,7 @@ export class BrowserInfo {
 	@ApiModelProperty()
 	ipAddresses: string;
 
-	@Column({ default: 0 })
+	@Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
 	@ApiModelProperty()
-	createdAt: number;
+	createdAt: string;
 }

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Param } from "@nestjs/common";
+import { Controller, Get, Post, Body, Req, Param } from "@nestjs/common";
 import { ApiOkResponse, ApiUseTags } from "@nestjs/swagger";
 import { BrowserInfoService } from "./browser.info.service";
 import { BrowserInfo } from "./browser.info.entity";
+import { Request } from "express";
 
 @Controller()
 export class BrowserInfoController {
@@ -24,7 +25,10 @@ export class BrowserInfoController {
 	@Post("push")
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
-	async push(@Body() browserInfo: BrowserInfo): Promise<BrowserInfo> {
+	async push(@Body() browserInfo: BrowserInfo, @Req() request: Request): Promise<BrowserInfo> {
+		// console.dir(browserInfo);
+		// console.dir(request.headers);
+		browserInfo.acceptLanguage = request.headers["accept-language"];
 		return await this.browserInfoService.create(browserInfo);
 	}
 }
