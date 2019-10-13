@@ -1,4 +1,4 @@
-(function(pushUrl){
+(function(){
     var Collector = function() {
         this.getUserAgent = function() {
             return navigator.userAgent;
@@ -20,7 +20,7 @@
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.send(data);
         } catch (e){
-            console.log("error: " + e.message);
+            console.error("error: " + e.message);
         }
         
         xhr.onload = function() {
@@ -28,10 +28,11 @@
         };
 
         xhr.onerror = function() {
-            console.log("Network Error");
+            console.error("Network Error");
         };
     }
-
+    
+    var pushUrl = "http://localhost:8082/push";
     var collector = new Collector();
 
     var data = JSON.stringify({
@@ -40,5 +41,11 @@
     });
     
     request(pushUrl, "POST", data);
+    
+    /*
+    window.addEventListener("beforeunload", function(e) {
+    });
 
-})("http://localhost:8082/push");
+    window.onbeforeunload = function (e) {}
+    };*/
+})();
