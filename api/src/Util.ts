@@ -10,7 +10,7 @@ export class Util {
 			return "Safari";
 		} else if (userAgent.indexOf("Firefox") !== -1) {
 			return "Firefox";
-		} else if (userAgent.indexOf("MSIE") !== -1) {
+		} else if (userAgent.indexOf("MSIE") !== -1 || userAgent.indexOf("Trident") !== -1) {
 			return "IE";
 		} else {
 			return "Unknown";
