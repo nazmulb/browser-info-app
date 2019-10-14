@@ -3,6 +3,7 @@ import { ApiOkResponse, ApiUseTags } from "@nestjs/swagger";
 import { BrowserInfoService } from "./browser.info.service";
 import { BrowserInfo } from "./browser.info.entity";
 import { Request } from "express";
+import { Util } from "../Util";
 
 @Controller()
 export class BrowserInfoController {
@@ -30,6 +31,7 @@ export class BrowserInfoController {
 			browserInfo.userAgent = request.headers["user-agent"];
 		}
 
+		browserInfo.browserType = Util.getBrowserName(request.headers["user-agent"]);
 		browserInfo.acceptLanguage = request.headers["accept-language"];
 
 		return await this.browserInfoService.create(browserInfo);
