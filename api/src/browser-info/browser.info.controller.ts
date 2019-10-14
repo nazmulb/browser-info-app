@@ -19,7 +19,8 @@ export class BrowserInfoController {
 	@Get("stat")
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
-	async stat(): Promise<BrowserInfo[]> {
+	async stat(@Req() request: Request): Promise<BrowserInfo[]> {
+		// console.log(request.connection.remoteAddress);
 		return await this.browserInfoService.list();
 	}
 
@@ -31,7 +32,10 @@ export class BrowserInfoController {
 			browserInfo.userAgent = request.headers["user-agent"];
 		}
 
-		browserInfo.browserType = Util.getBrowserName(request.headers["user-agent"]);
+		// console.log(request.connection.remoteAddress);
+
+		browserInfo.browserType = Util.getBrowserType(request.headers["user-agent"]);
+		browserInfo.osType = Util.getOsType(request.headers["user-agent"]);
 		browserInfo.acceptLanguage = request.headers["accept-language"];
 
 		return await this.browserInfoService.create(browserInfo);

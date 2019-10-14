@@ -5,7 +5,7 @@
     "no-unused-expression": true
   },
   "rules": {
-    "indent": [true, "tabs", 2],  
+    "indent": [false],  
     "quotemark": [true, "double"],
     "semicolon": [true, "always"],
     "member-access": [false],

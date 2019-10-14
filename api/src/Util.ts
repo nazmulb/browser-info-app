@@ -1,5 +1,5 @@
 export class Util {
-	static getBrowserName(userAgent: string): string {
+	static getBrowserType(userAgent: string): string {
 		if (userAgent.indexOf("Edge") > -1) {
 			return "Edge";
 		} else if (userAgent.indexOf("Opera") !== -1 || userAgent.indexOf("OPR") !== -1) {
@@ -14,6 +14,18 @@ export class Util {
 			return "IE";
 		} else {
 			return "Unknown";
+		}
+	}
+
+	static getOsType(userAgent: string): string {
+		if (userAgent.indexOf("Linux") > -1) {
+            return "Linux";
+		} else if (userAgent.indexOf("Mac") !== -1) {
+		    return "Mac Os X";
+		} else if (userAgent.indexOf("Win") !== -1) {
+		    return "Windows";
+		} else {
+		    return "Unknown";
 		}
 	}
 }
