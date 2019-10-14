@@ -3,7 +3,7 @@ import { ApiOkResponse, ApiUseTags } from "@nestjs/swagger";
 import { BrowserInfoService } from "./browser.info.service";
 import { BrowserInfo } from "./browser.info.entity";
 import { Request } from "express";
-import { Util } from "../Util";
+import { Util, BrowserParams } from "../Util";
 
 @Controller()
 export class BrowserInfoController {
@@ -20,7 +20,6 @@ export class BrowserInfoController {
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
 	async stat(@Req() request: Request): Promise<BrowserInfo[]> {
-		// console.log(request.connection.remoteAddress);
 		return await this.browserInfoService.list();
 	}
 
@@ -28,15 +27,23 @@ export class BrowserInfoController {
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
 	async push(@Body() browserInfo: BrowserInfo, @Req() request: Request): Promise<BrowserInfo> {
+		// console.dir(request.headers);
+
+		const uAgent = request.header("user-agent");
 		if (!browserInfo.hasOwnProperty("userAgent")) {
-			browserInfo.userAgent = request.headers["user-agent"];
+			browserInfo.userAgent = uAgent;
 		}
 
-		// console.log(request.connection.remoteAddress);
+		const browserObj: BrowserParams = Util.getBrowserWithMajorVersion(uAgent);
+		browserInfo.browserType = browserObj.browser;
+		if (browserObj.browser !== "Unknown") { browserInfo.browserVersion = browserObj.majorVersion.toString(); }
 
-		browserInfo.browserType = Util.getBrowserType(request.headers["user-agent"]);
-		browserInfo.osType = Util.getOsType(request.headers["user-agent"]);
-		browserInfo.acceptLanguage = request.headers["accept-language"];
+		browserInfo.osType = Util.getOsType(uAgent);
+		browserInfo.acceptLanguage = request.header("accept-language");
+
+		if (!browserInfo.hasOwnProperty("ipAddresses")) {
+			browserInfo.ipAddresses = request.header("x-forwarded-for");
+		}
 
 		return await this.browserInfoService.create(browserInfo);
 	}
