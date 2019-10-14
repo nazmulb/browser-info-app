@@ -26,9 +26,12 @@ export class BrowserInfoController {
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
 	async push(@Body() browserInfo: BrowserInfo, @Req() request: Request): Promise<BrowserInfo> {
-		// console.dir(browserInfo);
-		// console.dir(request.headers);
+		if (!browserInfo.hasOwnProperty("userAgent")) {
+			browserInfo.userAgent = request.headers["user-agent"];
+		}
+
 		browserInfo.acceptLanguage = request.headers["accept-language"];
+
 		return await this.browserInfoService.create(browserInfo);
 	}
 }
