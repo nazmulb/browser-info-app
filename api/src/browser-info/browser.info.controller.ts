@@ -20,7 +20,7 @@ export class BrowserInfoController {
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
 	async stat(): Promise<BrowserInfo[]> {
-		return await this.browserInfoService.list();
+		return await this.browserInfoService.stat();
 	}
 
 	@Post("push")

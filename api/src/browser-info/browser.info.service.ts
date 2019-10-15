@@ -12,8 +12,11 @@ export class BrowserInfoService {
 	}
 
 	async stat(): Promise<BrowserInfo[]> {
-		const browsers: BrowserInfo[] = await this.browserInfoRepository.find();
-		return browsers;
+		// const lastEntityInsertedTime: BrowserInfo[] = await this.browserInfoRepository.lastEntityInsertedTime();
+		// console.log(lastEntityInsertedTime[0].createdAt);
+
+		const numberOfEntriesByTypeOSVersion: BrowserInfo[] = await this.browserInfoRepository.numberOfEntriesByTypeOSVersion();
+		return numberOfEntriesByTypeOSVersion;
 	}
 
 	async create(browserInfo: BrowserInfo): Promise<BrowserInfo> {
