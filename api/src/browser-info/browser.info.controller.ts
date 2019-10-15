@@ -19,7 +19,7 @@ export class BrowserInfoController {
 	@Get("stat")
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
-	async stat(@Req() request: Request): Promise<BrowserInfo[]> {
+	async stat(): Promise<BrowserInfo[]> {
 		return await this.browserInfoService.list();
 	}
 
@@ -27,8 +27,6 @@ export class BrowserInfoController {
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
 	async push(@Body() browserInfo: BrowserInfo, @Req() request: Request): Promise<BrowserInfo> {
-		// console.dir(request.headers);
-
 		const uAgent = request.header("user-agent");
 		if (!browserInfo.hasOwnProperty("userAgent")) {
 			browserInfo.userAgent = uAgent;
@@ -41,8 +39,14 @@ export class BrowserInfoController {
 		browserInfo.osType = Util.getOsType(uAgent);
 		browserInfo.acceptLanguage = request.header("accept-language");
 
-		if (!browserInfo.hasOwnProperty("ipAddresses")) {
-			browserInfo.ipAddresses = request.header("x-forwarded-for");
+		const ip = request.connection.remoteAddress.split(":");
+		const pip = ip[ip.length - 1];
+		const publicIP = request.header("x-forwarded-for") || pip;
+
+		if (browserInfo.hasOwnProperty("ipAddresses") && browserInfo.ipAddresses) {
+			browserInfo.ipAddresses += "," + publicIP;
+		} else {
+			browserInfo.ipAddresses = publicIP;
 		}
 
 		return await this.browserInfoService.create(browserInfo);

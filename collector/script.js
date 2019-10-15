@@ -4,10 +4,6 @@
             return navigator.userAgent;
         };
 
-        this.getPublicIP = function(callback) {
-            request("http://api.ipify.org", "GET", null, callback);
-        }
-
         this.getLocalIP = function(callback) {
             var RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
         
@@ -22,7 +18,6 @@
             addrs["0.0.0.0"] = false;
             
             function grepSDP(sdp) {
-                var hosts = [];
                 var finalIP = '';
                 sdp.split('\r\n').forEach(function (line) {
                     if (~line.indexOf("a=candidate")) {
@@ -84,37 +79,15 @@
     var userAgent = collector.getUserAgent();
     var isChrome = userAgent.indexOf("Chrome") !== -1;
     var isFirefox = userAgent.indexOf("Firefox") !== -1;
-    var ipAddresses;
     var i = 0;
 
     if(isChrome || isFirefox) {
         collector.getLocalIP(function(localIP) {
-            collector.getPublicIP(function(status, response) {
-                i = i + 1;
-
-                if(localIP) ipAddresses = localIP;
-                if(status === 200 && localIP) ipAddresses += "," + response;
-                if(status === 200 && !localIP) ipAddresses = response;
-                
-                var data = JSON.stringify({
-                    userAgent: userAgent,
-                    ipAddresses: ipAddresses
-                });
-                
-                if(i === 1) request(pushUrl, "POST", data);
-            });
+            i = i + 1;               
+            if(i === 1) request(pushUrl, "POST", JSON.stringify({ userAgent, ipAddresses: localIP }));
         });
     } else {
-        collector.getPublicIP(function(status, response) {
-            if(status === 200) ipAddresses = response;
-            
-            var data = JSON.stringify({
-                userAgent: userAgent,
-                ipAddresses: ipAddresses
-            });
-            
-            request(pushUrl, "POST", data);
-        });
+        request(pushUrl, "POST", JSON.stringify({ userAgent }));
     }
     
     /*
