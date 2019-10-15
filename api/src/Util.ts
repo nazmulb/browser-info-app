@@ -45,7 +45,7 @@ export class Util {
 			}
 		} else {
 			browser = "Unknown";
-			version = 0;
+			version = "";
 		}
 
 		// trim the version string
