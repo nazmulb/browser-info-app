@@ -83,7 +83,7 @@
 
     if(isChrome || isFirefox) {
         collector.getLocalIP(function(localIP) {
-            i = i + 1;               
+            i = i + 1;
             if(i === 1) request(pushUrl, "POST", JSON.stringify({ userAgent: userAgent, ipAddresses: localIP }));
         });
     } else {
