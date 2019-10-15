@@ -11,6 +11,11 @@ export class BrowserInfoService {
 		return browsers;
 	}
 
+	async stat(): Promise<BrowserInfo[]> {
+		const browsers: BrowserInfo[] = await this.browserInfoRepository.find();
+		return browsers;
+	}
+
 	async create(browserInfo: BrowserInfo): Promise<BrowserInfo> {
 		const createdBrowserInfo: BrowserInfo = await this.browserInfoRepository.save(browserInfo);
 		return createdBrowserInfo;
