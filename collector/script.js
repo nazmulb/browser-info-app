@@ -12,7 +12,9 @@
             var RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
         
             if (!RTCPeerConnection) {
-              return 'Your browser does not support this API';
+                callback(0);
+                console.warn("Your browser does not support this API");
+                return;
             }
             
             var rtc = new RTCPeerConnection({iceServers:[]});
@@ -66,7 +68,7 @@
         }
         
         xhr.onload = function() {
-            if (xhr.readyState === xhr.DONE) {
+            if (xhr.readyState === 4) {
                 console.log("Loaded: " + xhr.status + " " + xhr.response);
                 if(callback) callback(xhr.status, xhr.response);
             }
