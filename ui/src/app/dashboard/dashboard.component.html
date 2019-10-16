@@ -1,0 +1,15 @@
+<p>Last insertion time: {{ time }}</p>
+<table>
+    <tr>
+        <th>OS</th>
+        <th>Browser</th>
+        <th>Version</th>
+        <th># of records</th>
+    </tr>
+    <tr *ngFor="let stat of stats">
+        <td>{{stat.osType}}</td>
+        <td>{{stat.browserType}}</td>
+        <td>{{stat.browserVersion}}</td>
+        <td>{{stat.number_of_records}}</td>
+    </tr>
+</table>
