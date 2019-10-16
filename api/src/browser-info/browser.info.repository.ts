@@ -3,8 +3,22 @@ import { BrowserInfo } from "./browser.info.entity";
 
 @EntityRepository(BrowserInfo)
 export class BrowserInfoRepository extends Repository<BrowserInfo> {
+    async randomEntry(
+        browserType: string,
+		      osType: string,
+		      browserVersion: string,
+    ): Promise<BrowserInfo> {
+        return this.createQueryBuilder("bf")
+                .where("browserType = :browserType", { browserType })
+                .andWhere("osType = :osType", { osType })
+                .andWhere("browserVersion = :browserVersion", { browserVersion })
+                .orderBy("RAND()")
+                .take(1)
+                .getRawOne();
+    }
+
     async lastEntityInsertedTime(): Promise<BrowserInfo> {
-        return this.createQueryBuilder()
+        return this.createQueryBuilder("bf")
                 .select("createdAt")
                 .orderBy("id", "DESC")
                 .take(1)
@@ -12,7 +26,7 @@ export class BrowserInfoRepository extends Repository<BrowserInfo> {
     }
 
     async numberOfEntriesByTypeOSVersion(): Promise<BrowserInfo[]> {
-        return this.createQueryBuilder()
+        return this.createQueryBuilder("bf")
                 .select("COUNT(1)", "number_of_records")
                 .addSelect("browserType")
                 .addSelect("osType")

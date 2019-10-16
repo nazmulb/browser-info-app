@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Req, Param } from "@nestjs/common";
+import { Controller, Get, Post, Body, Req, Query } from "@nestjs/common";
 import { ApiOkResponse, ApiUseTags } from "@nestjs/swagger";
 import { BrowserInfoService, IStat } from "./browser.info.service";
 import { BrowserInfo } from "./browser.info.entity";
@@ -12,8 +12,12 @@ export class BrowserInfoController {
 	@Get("pull")
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
-	async pull(): Promise<BrowserInfo[]> {
-		return await this.browserInfoService.list();
+	async pull(
+		@Query("browserType") browserType: string,
+		@Query("osType") osType: string,
+		@Query("browserVersion") browserVersion: string,
+		): Promise<BrowserInfo> {
+		return await this.browserInfoService.randomEntry(browserType, osType, browserVersion);
 	}
 
 	@Get("stat")

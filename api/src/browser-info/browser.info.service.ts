@@ -11,9 +11,13 @@ export interface IStat {
 export class BrowserInfoService {
 	constructor(private readonly browserInfoRepository: BrowserInfoRepository) { }
 
-	async list(): Promise<BrowserInfo[]> {
-		const browsers: BrowserInfo[] = await this.browserInfoRepository.find();
-		return browsers;
+	async randomEntry(
+		browserType: string,
+		osType: string,
+		browserVersion: string,
+	): Promise<BrowserInfo> {
+		const randomEntry: BrowserInfo = await this.browserInfoRepository.randomEntry(browserType, osType, browserVersion);
+		return randomEntry;
 	}
 
 	async stat(): Promise<IStat> {
