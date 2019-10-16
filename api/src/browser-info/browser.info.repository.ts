@@ -14,7 +14,7 @@ export class BrowserInfoRepository extends Repository<BrowserInfo> {
                 .andWhere("browserVersion = :browserVersion", { browserVersion })
                 .orderBy("RAND()")
                 .take(1)
-                .getRawOne();
+                .getOne();
     }
 
     async lastEntityInsertedTime(): Promise<BrowserInfo> {

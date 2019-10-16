@@ -15,7 +15,8 @@
     "interface-name": [false],
     "arrow-parens": false,
     "object-literal-sort-keys": false,
-    "no-conditional-assignment": false
+    "no-conditional-assignment": false,
+    "max-classes-per-file": false
   },
   "rulesDirectory": []
 }

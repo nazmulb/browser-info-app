@@ -1,9 +1,24 @@
 import { Controller, Get, Post, Body, Req, Query } from "@nestjs/common";
-import { ApiOkResponse, ApiUseTags } from "@nestjs/swagger";
+import { IsString, IsNotEmpty } from "class-validator";
+import { ApiOkResponse, ApiUseTags, ApiImplicitQuery } from "@nestjs/swagger";
 import { BrowserInfoService, IStat } from "./browser.info.service";
 import { BrowserInfo } from "./browser.info.entity";
 import { Request } from "express";
 import { Util, IBrowser } from "../Util";
+
+export class PullQueries {
+	@IsString()
+	@IsNotEmpty()
+	browserType: string;
+
+	@IsString()
+	@IsNotEmpty()
+	osType: string;
+
+	@IsString()
+	@IsNotEmpty()
+	browserVersion: string;
+}
 
 @Controller()
 export class BrowserInfoController {
@@ -12,12 +27,8 @@ export class BrowserInfoController {
 	@Get("pull")
 	@ApiUseTags("browser-info")
 	@ApiOkResponse({type: BrowserInfo})
-	async pull(
-		@Query("browserType") browserType: string,
-		@Query("osType") osType: string,
-		@Query("browserVersion") browserVersion: string,
-		): Promise<BrowserInfo> {
-		return await this.browserInfoService.randomEntry(browserType, osType, browserVersion);
+	async pull(@Query() queries: PullQueries): Promise<BrowserInfo> {
+		return await this.browserInfoService.randomEntry(queries.browserType, queries.osType, queries.browserVersion);
 	}
 
 	@Get("stat")
