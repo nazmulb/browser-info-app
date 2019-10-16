@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ApiService } from '../api.service';
-
-export interface IStat {
-	insertedTime: string;
-	entriesByTypeOSVersion: any[];
-}
-
+import { IStat } from '../istat';
 
 @Component({
   selector: 'app-dashboard',

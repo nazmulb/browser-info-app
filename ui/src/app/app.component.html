@@ -1,7 +1,22 @@
-<div>
-  <span>Welcome, {{ title }} app is running!</span>
-</div>
-
-<button routerLink="/">Home</button> | 
-<button routerLink="/dashboard">Dashboard</button>
-<router-outlet></router-outlet>
+<header class="container-fluid">
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <span class="navbar-brand">{{ title }}</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<main class="container-fluid">
+  <router-outlet></router-outlet>
+</main>
+<footer class="container-fluid">
+  <p class="text-xs-center">© Copyright 2019. All rights reserved.</p>
+</footer>
