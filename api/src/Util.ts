@@ -1,10 +1,10 @@
-export interface BrowserParams {
-	browser: string;
+export interface IBrowser {
+	browserType: string;
 	majorVersion: number;
 }
 
 export class Util {
-	static getBrowserWithMajorVersion(userAgent: string): BrowserParams {
+	static getBrowserWithMajorVersion(userAgent: string): IBrowser {
 		let browser; let version; let verOffset; let ix; let majorVersion;
 
 		if ((verOffset = userAgent.indexOf("Edge")) > -1) {
@@ -56,7 +56,7 @@ export class Util {
 		majorVersion = parseInt("" + version, 10);
 
 		return {
-			browser,
+			browserType: browser,
 			majorVersion,
 		};
 	}

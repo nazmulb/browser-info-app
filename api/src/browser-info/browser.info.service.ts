@@ -2,6 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { BrowserInfoRepository } from "./browser.info.repository";
 import { BrowserInfo } from "./browser.info.entity";
 
+export interface IStat {
+	insertedTime: string;
+	entriesByTypeOSVersion: BrowserInfo[];
+}
+
 @Injectable()
 export class BrowserInfoService {
 	constructor(private readonly browserInfoRepository: BrowserInfoRepository) { }
@@ -11,12 +16,14 @@ export class BrowserInfoService {
 		return browsers;
 	}
 
-	async stat(): Promise<BrowserInfo[]> {
-		// const lastEntityInsertedTime: BrowserInfo[] = await this.browserInfoRepository.lastEntityInsertedTime();
-		// console.log(lastEntityInsertedTime[0].createdAt);
+	async stat(): Promise<IStat> {
+		const lastInsertedTime: BrowserInfo = await this.browserInfoRepository.lastEntityInsertedTime();
+		const entriesByTypeOSVersion: BrowserInfo[] = await this.browserInfoRepository.numberOfEntriesByTypeOSVersion();
 
-		const numberOfEntriesByTypeOSVersion: BrowserInfo[] = await this.browserInfoRepository.numberOfEntriesByTypeOSVersion();
-		return numberOfEntriesByTypeOSVersion;
+		return {
+			insertedTime: (lastInsertedTime) ? lastInsertedTime.createdAt : "",
+			entriesByTypeOSVersion,
+		};
 	}
 
 	async create(browserInfo: BrowserInfo): Promise<BrowserInfo> {
