@@ -9,7 +9,7 @@ describe("App (e2e)", () => {
         app = await setupTests();
     });
 
-    it("/ (GET)", () => {
+    test("/ (GET)", () => {
         return request(app.getHttpServer())
             .get("/")
             .expect(200)

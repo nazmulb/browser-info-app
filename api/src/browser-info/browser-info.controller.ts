@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Body, Req, Query } from "@nestjs/common";
 import { ApiOkResponse, ApiUseTags, ApiImplicitQuery } from "@nestjs/swagger";
-import { BrowserInfoService, IStat } from "./browser-info.service";
+import { BrowserInfoService } from "./browser-info.service";
 import { BrowserInfo } from "./browser-info.entity";
 import { Request } from "express";
 import { Util } from "../Util";
 import { BrowserMajorVersion } from "../interfaces/browser-major-version.interface";
+import { Stat } from "../interfaces/stat.interface";
 import { PullDto } from "../dto/pull.dto";
 
 @Controller()
@@ -21,7 +22,7 @@ export class BrowserInfoController {
     @Get("stat")
     @ApiUseTags("browser-info")
     @ApiOkResponse({type: BrowserInfo})
-    async stat(): Promise<IStat> {
+    async stat(): Promise<Stat> {
         return await this.browserInfoService.stat();
     }
 

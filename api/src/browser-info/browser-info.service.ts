@@ -1,11 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { BrowserInfoRepository } from "./browser-info.repository";
 import { BrowserInfo } from "./browser-info.entity";
-
-export interface IStat {
-    insertedTime: string;
-    entriesByTypeOSVersion: BrowserInfo[];
-}
+import { Stat } from "../interfaces/stat.interface";
 
 @Injectable()
 export class BrowserInfoService {
@@ -20,7 +16,7 @@ export class BrowserInfoService {
         return randomEntry;
     }
 
-    async stat(): Promise<IStat> {
+    async stat(): Promise<Stat> {
         const lastInsertedTime: BrowserInfo = await this.browserInfoRepository.lastEntityInsertedTime();
         const entriesByTypeOSVersion: BrowserInfo[] = await this.browserInfoRepository.numberOfEntriesByTypeOSVersion();
 
