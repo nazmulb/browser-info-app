@@ -4,12 +4,12 @@ import { ApiModelProperty } from "@nestjs/swagger";
 
 @Entity()
 export class User {
-	@PrimaryGeneratedColumn()
-	@ApiModelProperty()
-	id: number;
+    @PrimaryGeneratedColumn()
+    @ApiModelProperty()
+    id: number;
 
-	@Column()
-	@IsNotEmpty()
-	@ApiModelProperty()
-	password: string;
+    @Column()
+    @IsNotEmpty()
+    @ApiModelProperty()
+    password: string;
 }

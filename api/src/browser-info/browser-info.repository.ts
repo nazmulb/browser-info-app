@@ -1,12 +1,12 @@
 import { Repository, EntityRepository, SelectQueryBuilder } from "typeorm";
-import { BrowserInfo } from "./browser.info.entity";
+import { BrowserInfo } from "./browser-info.entity";
 
 @EntityRepository(BrowserInfo)
 export class BrowserInfoRepository extends Repository<BrowserInfo> {
     async randomEntry(
         browserType: string,
-		      osType: string,
-		      browserVersion: string,
+        osType: string,
+        browserVersion: string,
     ): Promise<BrowserInfo> {
         return this.createQueryBuilder("bf")
                 .where("browserType = :browserType", { browserType })

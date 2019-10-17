@@ -1,7 +1,19 @@
 {
   "extends": "tslint:recommended",
   "rules": {
-    "indent": [false],
+    "indent": [
+      true, 
+      "spaces", 
+      4
+    ],
+    "quotemark": [
+      true, 
+      "double"
+    ],
+    "semicolon": [
+      true, 
+      "always"
+    ],
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
@@ -68,10 +80,6 @@
     ],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [
-      true,
-      "single"
-    ],
     "trailing-comma": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,

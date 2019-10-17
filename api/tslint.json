@@ -5,7 +5,7 @@
     "no-unused-expression": true
   },
   "rules": {
-    "indent": [false],  
+    "indent": [true, "spaces", 4],
     "quotemark": [true, "double"],
     "semicolon": [true, "always"],
     "member-access": [false],
@@ -15,8 +15,7 @@
     "interface-name": [false],
     "arrow-parens": false,
     "object-literal-sort-keys": false,
-    "no-conditional-assignment": false,
-    "max-classes-per-file": false
+    "no-conditional-assignment": false
   },
   "rulesDirectory": []
 }

@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ApiService {
 
-  private REST_API_SERVER = 'http://localhost:8082';
+  private REST_API_SERVER = "http://localhost:8082";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -15,6 +15,6 @@ export class ApiService {
   }
 
   public auth() {
-    return this.httpClient.post(`${this.REST_API_SERVER}/auth`, { password: '123' });
+    return this.httpClient.post(`${this.REST_API_SERVER}/auth`, { password: "123" });
   }
 }
