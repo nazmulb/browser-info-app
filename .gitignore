@@ -6,6 +6,7 @@
 **/data
 **/coverage
 **/reports
+**/.vscode
 
 # OS
 *.DS_Store

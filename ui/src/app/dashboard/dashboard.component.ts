@@ -16,10 +16,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.apiService.stat().subscribe((data: Stat) => {
-      console.log(data);
-
-      this.time = (data) ? new Date(data.insertedTime).toLocaleString() : "";
-      this.stats = (data) ? data.entriesByTypeOSVersion : [];
+      this.time = (data.insertedTime) ? new Date(data.insertedTime).toLocaleString() : "";
+      this.stats = (data.entriesByTypeOSVersion) ? data.entriesByTypeOSVersion : [];
     });
   }
 }
