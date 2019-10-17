@@ -21,6 +21,13 @@ describe("Browser Info (e2e)", () => {
         app = await setupTests();
     });
 
+    test("/push (POST)", async () => {
+        const response = await request(app.getHttpServer()).post("/push").send({});
+        // console.dir(response.body);
+        
+        expect(response.status).toBe(201);
+    });
+
     test("/pull (GET)", async () => {
         const response = await request(app.getHttpServer()).get("/pull");
         // console.dir(response.body);
