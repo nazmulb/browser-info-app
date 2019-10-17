@@ -16,7 +16,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:suffix": "jest --config ./test/jest-e2e.json --detectOpenHandles",
+    "test:e2e": "MYSQL_HOST=localhost MYSQL_USER=root MYSQL_PASSWORD=123 MYSQL_DATABASE=browser_info_app npm run test:suffix"
   },
   "dependencies": {
     "@nestjs/common": "^6.7.2",
