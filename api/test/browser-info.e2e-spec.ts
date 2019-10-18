@@ -9,11 +9,30 @@ describe("Browser Info (e2e)", () => {
         app = await setupTests();
     });
 
-    test("/push (POST)", async () => {
-        const response = await request(app.getHttpServer()).post("/push").send({});
-        // console.dir(response.body);
+    describe("/push (POST)", () => {
+        test("Sendig data from Chrome with local IP and lang", async () => {
+            const response = await request(app.getHttpServer()).post("/push").send({
+                userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36",
+                ipAddresses: "192.168.0.100",
+                acceptLanguage: "en-US",
+            });
 
-        expect(response.status).toBe(201);
+            expect(response.status).toBe(201);
+            expect(typeof response.body).toBe("object");
+
+            expect(response.body.userAgent).toBe("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36");
+            expect(response.body.browserType).toBe("Chrome");
+            expect(response.body.osType).toBe("Mac Os X");
+            expect(response.body.browserVersion).toBe("77");
+            expect(response.body.acceptLanguage).toBe("en-US");
+            expect(response.body.ipAddresses).toContain("192.168.0.100");
+
+            expect(response.body).toHaveProperty("id");
+            expect(typeof response.body.id).toBe("number");
+
+            expect(response.body).toHaveProperty("createdAt");
+            expect(typeof response.body.createdAt).toBe("string");
+        });
     });
 
     test("/pull (GET)", async () => {

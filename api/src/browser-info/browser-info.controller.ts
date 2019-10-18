@@ -30,17 +30,19 @@ export class BrowserInfoController {
     @ApiUseTags("browser-info")
     @ApiOkResponse({type: BrowserInfo})
     async push(@Body() browserInfo: BrowserInfo, @Req() request: Request): Promise<BrowserInfo> {
-        const uAgent = request.header("user-agent");
         if (!browserInfo.hasOwnProperty("userAgent")) {
-            browserInfo.userAgent = uAgent;
+            browserInfo.userAgent = request.header("user-agent");
         }
 
-        const browserObj: BrowserMajorVersion = Util.getBrowserWithMajorVersion(uAgent);
+        const browserObj: BrowserMajorVersion = Util.getBrowserWithMajorVersion(browserInfo.userAgent);
         browserInfo.browserType = browserObj.browserType;
         if (browserObj.browserType !== "Unknown") { browserInfo.browserVersion = browserObj.majorVersion.toString(); }
 
-        browserInfo.osType = Util.getOsType(uAgent);
-        browserInfo.acceptLanguage = request.header("accept-language");
+        browserInfo.osType = Util.getOsType(browserInfo.userAgent);
+
+        if (!browserInfo.hasOwnProperty("acceptLanguage")) {
+            browserInfo.acceptLanguage = request.header("accept-language");
+        }
 
         const ip = request.connection.remoteAddress.split(":");
         const pip = ip[ip.length - 1];
