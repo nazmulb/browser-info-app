@@ -106,6 +106,16 @@ describe("Browser Info (e2e)", () => {
             expect(response.body).toHaveProperty("createdAt");
             expect(typeof response.body.createdAt).toBe("string");
         });
+
+        test("Sendig data without any payload", async () => {
+            const response = await request(app.getHttpServer()).post("/push").send({});
+
+            expect(response.status).toBe(201);
+            expect(typeof response.body).toBe("object");
+
+            expect(response.body).toHaveProperty("id");
+            expect(typeof response.body.id).toBe("number");
+        });
     });
 
     test("/pull (GET)", async () => {
