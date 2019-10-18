@@ -52,10 +52,10 @@
         }
     }
 
-    var request = function (url, method, async, data, callback) {
+    var request = function (url, method, data, callback) {
         try {
             var xhr = new XMLHttpRequest();
-            xhr.open(method, url, async);
+            xhr.open(method, url, false);
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.send(data);
         } catch (e) {
@@ -77,7 +77,7 @@
 
     function sentCollectorData(withoutPayload) {
         if (withoutPayload) {
-            request(pushUrl, "POST", false);
+            request(pushUrl, "POST");
             isSentCollectorData = true;
             return;
         }
@@ -87,19 +87,15 @@
             collector.getLocalIP(function (localIP) {
                 i = i + 1;
                 if (i === 1) {
-                    setTimeout(function () {
-                        request(pushUrl, "POST", false, JSON.stringify({ userAgent: userAgent, ipAddresses: localIP }), function (status, response) {
-                            isSentCollectorData = true;
-                        });
-                    }, 10000);
+                    request(pushUrl, "POST", JSON.stringify({ userAgent: userAgent, ipAddresses: localIP }), function (status, response) {
+                        isSentCollectorData = true;
+                    });
                 }
             });
         } else {
-            setTimeout(function () {
-                request(pushUrl, "POST", false, JSON.stringify({ userAgent: userAgent }), function (status, response) {
-                    isSentCollectorData = true;
-                });
-            }, 10000);
+            request(pushUrl, "POST", JSON.stringify({ userAgent: userAgent }), function (status, response) {
+                isSentCollectorData = true;
+            });
         }
     }
 
