@@ -22,4 +22,7 @@ $ npm run start:prod
 ```bash
 # e2e tests
 $ npm run test:e2e
+
+# Test coverage
+$ npm run test:coverage
 ```
