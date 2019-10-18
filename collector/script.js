@@ -1,22 +1,22 @@
-(function(){
-    var Collector = function() {
-        this.getUserAgent = function() {
+(function () {
+    var Collector = function () {
+        this.getUserAgent = function () {
             return navigator.userAgent;
         };
 
-        this.getLocalIP = function(callback) {
+        this.getLocalIP = function (callback) {
             var RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-        
+
             if (!RTCPeerConnection) {
                 callback(0);
                 console.warn("Your browser does not support this API");
                 return;
             }
-            
-            var rtc = new RTCPeerConnection({iceServers:[]});
+
+            var rtc = new RTCPeerConnection({ iceServers: [] });
             var addrs = {};
             addrs["0.0.0.0"] = false;
-            
+
             function grepSDP(sdp) {
                 var finalIP = '';
                 sdp.split('\r\n').forEach(function (line) {
@@ -35,15 +35,15 @@
                 });
                 return finalIP;
             }
-            
+
             if (1 || window.mozRTCPeerConnection) {
-                rtc.createDataChannel('', {reliable:false});
+                rtc.createDataChannel('', { reliable: false });
             };
-            
+
             rtc.onicecandidate = function (evt) {
                 if (evt.candidate) {
-                  var addr = grepSDP("a="+evt.candidate.candidate);
-                  callback(addr);
+                    var addr = grepSDP("a=" + evt.candidate.candidate);
+                    callback(addr);
                 }
             };
             rtc.createOffer(function (offerDesc) {
@@ -52,48 +52,65 @@
         }
     }
 
-    var request = function(url, method, data, callback) {
+    var request = function (url, method, async, data, callback) {
         try {
             var xhr = new XMLHttpRequest();
-            xhr.open(method, url, true);
+            xhr.open(method, url, async);
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.send(data);
-        } catch (e){
+        } catch (e) {
             console.error("error: " + e.message);
         }
-        
-        xhr.onload = function() {
-            if (xhr.readyState === 4) {
-                console.log("Loaded: " + xhr.status + " " + xhr.response);
-                if(callback) callback(xhr.status, xhr.response);
-            }
-        };
 
-        xhr.onerror = function() {
-            console.error("Network Error");
-        };
+        if (xhr.readyState === 4) {
+            console.log("Loaded: " + xhr.status + " " + xhr.response);
+            if (callback) callback(xhr.status, xhr.response);
+        }
     }
-    
+
     var pushUrl = "http://localhost:8082/push";
     var collector = new Collector();
     var userAgent = collector.getUserAgent();
     var isChrome = userAgent.indexOf("Chrome") !== -1;
     var isFirefox = userAgent.indexOf("Firefox") !== -1;
-    var i = 0;
+    var isSentCollectorData = false;
 
-    if(isChrome || isFirefox) {
-        collector.getLocalIP(function(localIP) {
-            i = i + 1;
-            if(i === 1) request(pushUrl, "POST", JSON.stringify({ userAgent: userAgent, ipAddresses: localIP }));
-        });
-    } else {
-        request(pushUrl, "POST", JSON.stringify({ userAgent: userAgent }));
+    function sentCollectorData(withoutPayload) {
+        if (withoutPayload) {
+            request(pushUrl, "POST", false);
+            isSentCollectorData = true;
+            return;
+        }
+
+        var i = 0;
+        if (isChrome || isFirefox) {
+            collector.getLocalIP(function (localIP) {
+                i = i + 1;
+                if (i === 1) {
+                    setTimeout(function () {
+                        request(pushUrl, "POST", false, JSON.stringify({ userAgent: userAgent, ipAddresses: localIP }), function (status, response) {
+                            isSentCollectorData = true;
+                        });
+                    }, 10000);
+                }
+            });
+        } else {
+            setTimeout(function () {
+                request(pushUrl, "POST", false, JSON.stringify({ userAgent: userAgent }), function (status, response) {
+                    isSentCollectorData = true;
+                });
+            }, 10000);
+        }
     }
-    
-    /*
-    window.addEventListener("beforeunload", function(e) {
-    });
 
-    window.onbeforeunload = function (e) {}
-    };*/
+    window.onbeforeunload = function (e) {
+        if (!isSentCollectorData) {
+            sentCollectorData(true);
+            e.preventDefault();
+            e.returnValue = "";
+            return true;
+        }
+    };
+
+    sentCollectorData();
 })();
