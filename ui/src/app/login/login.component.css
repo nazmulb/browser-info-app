@@ -1,0 +1,21 @@
+.loginBox {
+    background: #FFF;
+    margin-top: 70px;
+    margin-bottom: 30px;
+    padding: 20px 15px;
+    border: #EEE 1px solid;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+}
+
+.loginBox h3 {
+    margin-left: 13px;
+    margin-bottom: 25px;
+}
+
+.loginBtn {
+    margin-left: 13px;
+}
+
+.error {
+    color: #a94442;
+}
