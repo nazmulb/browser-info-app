@@ -16,10 +16,7 @@ export class ApiService {
   }
 
   public auth(password) {
-    return this.httpClient.post<any>(`${this.REST_API_SERVER}/auth`, { password });
-
-    /*
-    .pipe(
+    return this.httpClient.post<any>(`${this.REST_API_SERVER}/auth`, { password }).pipe(
       map(data => {
         // login successful if there's a jwt token in the response
         if (data && data.token) {
@@ -30,6 +27,5 @@ export class ApiService {
         return data;
       })
     );
-    */
   }
 }
