@@ -12,7 +12,7 @@ export class UsersController {
     @ApiUseTags("users")
     @ApiImplicitBody({ name: "body", type: String })
     @ApiOkResponse({ type: Object })
-    async auth(@Body("password") password: string): Promise<Object> {
+    async auth(@Body("password") password: string): Promise<object> {
         const user: User = await this.usersService.getByPassword(password);
         if (!user) {
             throw new UnauthorizedException("Invalid password");
@@ -21,7 +21,7 @@ export class UsersController {
         const newToken: string = jwt.sign({ password }, process.env.JWT_SECRET_KEY);
 
         return {
-            token: newToken
+            token: newToken,
         };
     }
 

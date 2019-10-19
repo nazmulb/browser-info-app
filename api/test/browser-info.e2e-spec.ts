@@ -3,10 +3,15 @@ import * as request from "supertest";
 import setupTests from "./setup-tests";
 
 let app: INestApplication;
+let token;
 
 describe("Browser Info (e2e)", () => {
     beforeEach(async () => {
         app = await setupTests();
+        const response = await request(app.getHttpServer()).post("/auth").send({password: "123"});
+        if (Object.keys(response.body).length) {
+            token = response.body.token;
+        }
     });
 
     describe("/push (POST)", () => {
@@ -119,7 +124,7 @@ describe("Browser Info (e2e)", () => {
     });
 
     test("/pull (GET)", async () => {
-        const response = await request(app.getHttpServer()).get("/pull").query({
+        const response = await request(app.getHttpServer()).get("/pull").set("auth_token", token).query({
             browserType: "Chrome", osType: "Mac Os X", browserVersion: "77",
         });
 
@@ -132,24 +137,15 @@ describe("Browser Info (e2e)", () => {
             expect(response.body.browserVersion).toBe("77");
 
             expect(response.body).toHaveProperty("id");
-            expect(typeof response.body.id).toBe("number");
-
             expect(response.body).toHaveProperty("userAgent");
-            expect(typeof response.body.userAgent).toBe("string");
-
             expect(response.body).toHaveProperty("acceptLanguage");
-            expect(typeof response.body.acceptLanguage).toBe("string");
-
             expect(response.body).toHaveProperty("ipAddresses");
-            expect(typeof response.body.ipAddresses).toBe("string");
-
             expect(response.body).toHaveProperty("createdAt");
-            expect(typeof response.body.createdAt).toBe("string");
         }
     });
 
     test("/stat (GET)", async () => {
-        const response = await request(app.getHttpServer()).get("/stat");
+        const response = await request(app.getHttpServer()).get("/stat").set("auth_token", token);
 
         expect(response.status).toBe(200);
         expect(typeof response.body).toBe("object");
@@ -162,18 +158,10 @@ describe("Browser Info (e2e)", () => {
 
         if (response.body.entriesByTypeOSVersion.length) {
             expect(typeof response.body.entriesByTypeOSVersion[0]).toBe("object");
-
             expect(response.body.entriesByTypeOSVersion[0]).toHaveProperty("number_of_records");
-            expect(typeof response.body.entriesByTypeOSVersion[0].number_of_records).toBe("string");
-
             expect(response.body.entriesByTypeOSVersion[0]).toHaveProperty("browserType");
-            expect(typeof response.body.entriesByTypeOSVersion[0].browserType).toBe("string");
-
             expect(response.body.entriesByTypeOSVersion[0]).toHaveProperty("osType");
-            expect(typeof response.body.entriesByTypeOSVersion[0].osType).toBe("string");
-
             expect(response.body.entriesByTypeOSVersion[0]).toHaveProperty("browserVersion");
-            expect(typeof response.body.entriesByTypeOSVersion[0].browserVersion).toBe("string");
         }
     });
 });
