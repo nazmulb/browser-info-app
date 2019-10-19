@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Req, Query } from "@nestjs/common";
-import { ApiOkResponse, ApiUseTags, ApiImplicitQuery } from "@nestjs/swagger";
+import { ApiOkResponse, ApiUseTags } from "@nestjs/swagger";
 import { BrowserInfoService } from "./browser-info.service";
 import { BrowserInfo } from "./browser-info.entity";
 import { Request } from "express";
