@@ -14,6 +14,7 @@ async function bootstrap() {
         .setDescription("Browser Info and Stat API")
         .setVersion("1.0")
         .addTag("browsers")
+        .addBearerAuth("auth_token", "header")
         .build();
 
     const document = SwaggerModule.createDocument(app, options);

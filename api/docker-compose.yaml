@@ -15,7 +15,8 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: 123
       MYSQL_DATABASE: browser_info_app
-    command: [ "npm", "run", "start:dev" ]
+      JWT_SECRET_KEY: test123
+    command: bash -c "npm run start:dev"
     working_dir: /app
     ports:
       - 8082:8082

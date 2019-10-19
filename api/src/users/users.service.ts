@@ -6,8 +6,8 @@ import { User } from "./user.entity";
 export class UsersService {
     constructor(private readonly usersRepository: UsersRepository) { }
 
-    async get(id: number): Promise<User> {
-        const user: User = await this.usersRepository.findOne(id);
+    async getByPassword(password: string): Promise<User> {
+        const user: User = await this.usersRepository.findOne({ password });
         return user;
     }
 

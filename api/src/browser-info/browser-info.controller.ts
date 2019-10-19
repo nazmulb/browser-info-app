@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Req, Query } from "@nestjs/common";
-import { ApiOkResponse, ApiUseTags } from "@nestjs/swagger";
+import { ApiOkResponse, ApiUseTags, ApiBearerAuth } from "@nestjs/swagger";
 import { BrowserInfoService } from "./browser-info.service";
 import { BrowserInfo } from "./browser-info.entity";
 import { Request } from "express";
@@ -14,6 +14,7 @@ export class BrowserInfoController {
 
     @Get("pull")
     @ApiUseTags("browser-info")
+    @ApiBearerAuth()
     @ApiOkResponse({type: BrowserInfo})
     async pull(@Query() queries: PullDto): Promise<BrowserInfo> {
         return await this.browserInfoService.randomEntry(queries.browserType, queries.osType, queries.browserVersion);
@@ -21,6 +22,7 @@ export class BrowserInfoController {
 
     @Get("stat")
     @ApiUseTags("browser-info")
+    @ApiBearerAuth()
     @ApiOkResponse({type: BrowserInfo})
     async stat(): Promise<Stat> {
         return await this.browserInfoService.stat();
