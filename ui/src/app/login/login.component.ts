@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
-  login() {
+  async login() {
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     } else {
-      const isSuccess = this.authService.authLogin(this.f.password.value);
+      const isSuccess = await this.authService.authLogin(this.f.password.value);
       if (isSuccess) {
         console.log("Login successful");
         this.router.navigate([this.returnUrl]);

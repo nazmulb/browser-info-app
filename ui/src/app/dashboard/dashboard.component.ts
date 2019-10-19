@@ -15,7 +15,8 @@ export class DashboardComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.apiService.stat().subscribe((data: Stat) => {
+    const token = localStorage.getItem("token");
+    this.apiService.stat(token).subscribe((data: Stat) => {
       this.time = (data.insertedTime) ? new Date(data.insertedTime).toLocaleString() : "";
       this.stats = (data.entriesByTypeOSVersion) ? data.entriesByTypeOSVersion : [];
     });
