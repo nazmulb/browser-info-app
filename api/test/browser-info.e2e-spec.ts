@@ -15,7 +15,7 @@ describe("Browser Info (e2e)", () => {
     });
 
     describe("/push (POST)", () => {
-        test("Sendig data from Mac/Chrome with local IP and lang", async () => {
+        test("Sending data from Mac/Chrome with local IP and lang", async () => {
             const response = await request(app.getHttpServer()).post("/push").send({
                 userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36",
                 ipAddresses: "192.168.0.100",
@@ -39,7 +39,7 @@ describe("Browser Info (e2e)", () => {
             expect(typeof response.body.createdAt).toBe("string");
         });
 
-        test("Sendig data from Linux/Firefox with local IP and lang", async () => {
+        test("Sending data from Linux/Firefox with local IP and lang", async () => {
             const response = await request(app.getHttpServer()).post("/push").send({
                 userAgent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0",
                 ipAddresses: "192.168.0.100",
@@ -63,7 +63,7 @@ describe("Browser Info (e2e)", () => {
             expect(typeof response.body.createdAt).toBe("string");
         });
 
-        test("Sendig data from Windows/IE with lang", async () => {
+        test("Sending data from Windows/IE with lang", async () => {
             const response = await request(app.getHttpServer()).post("/push").send({
                 userAgent: "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)",
                 acceptLanguage: "en-US",
@@ -88,7 +88,7 @@ describe("Browser Info (e2e)", () => {
             expect(typeof response.body.createdAt).toBe("string");
         });
 
-        test("Sendig data from Postman", async () => {
+        test("Sending data from Postman", async () => {
             const response = await request(app.getHttpServer()).post("/push").send({
                 userAgent: "PostmanRuntime/7.1.1",
             });
@@ -112,7 +112,7 @@ describe("Browser Info (e2e)", () => {
             expect(typeof response.body.createdAt).toBe("string");
         });
 
-        test("Sendig data without any payload", async () => {
+        test("Sending data without any payload", async () => {
             const response = await request(app.getHttpServer()).post("/push").send({});
 
             expect(response.status).toBe(201);

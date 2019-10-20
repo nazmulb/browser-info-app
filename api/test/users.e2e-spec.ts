@@ -4,7 +4,7 @@ import setupTests from "./setup-tests";
 
 let app: INestApplication;
 
-describe("Browser Info (e2e)", () => {
+describe("Users (e2e)", () => {
     beforeEach(async () => {
         app = await setupTests();
     });
