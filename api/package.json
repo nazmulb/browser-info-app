@@ -14,7 +14,8 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "lint:fix": "npm run lint -- --fix",
     "test:e2e": "jest --config ./jest-e2e.config.js --detectOpenHandles",
-    "test:cov": "jest --config ./jest-e2e.config.js --detectOpenHandles --coverage"
+    "test:cov": "jest --config ./jest-e2e.config.js --detectOpenHandles --coverage",
+    "db:add:user": "sh add-user.sh"
   },
   "dependencies": {
     "@nestjs/common": "^6.7.2",
