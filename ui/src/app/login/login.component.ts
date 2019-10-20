@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       password: ["", Validators.required]
     });
+
     this.returnUrl = "/dashboard";
   }
 

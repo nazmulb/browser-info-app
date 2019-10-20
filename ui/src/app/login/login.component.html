@@ -1,20 +1,25 @@
 <div class="row">
-    <div class="col-md-4 offset-sm-4 loginBox">
-        <h3>Log In</h3>
-        <p *ngIf="message" class="text-center error">{{message}}</p>
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
-          <div class="form-group clearfix" [ngClass]="{ 'has-error': submitted && f.password.errors }">
-            <label for="password" class="col-md-3">Password</label>
-            <div class="col-md-12">
-                <input type="password" class="form-control" formControlName="password"/>
-                <div *ngIf="submitted && f.password.errors" class="help-block">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                </div>
-            </div>
+  <div class="col-md-4 offset-sm-4 loginBox">
+    <h3>Log In</h3>
+    <p *ngIf="message" class="text-center error">{{message}}</p>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+      <div class="form-group">
+        <label for="password" class="col-md-3">Password</label>
+        <div class="col-md-12">
+          <input type="password" class="form-control" formControlName="password" />
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" class="alert alert-danger">
+          <div *ngIf="f.password.errors.required">
+            Password is required.
           </div>
-          <div class="col-xs-12 form-group">
-            <button class="btn btn-success loginBtn" type="submit">Login</button>
-          </div>
-      </form>
-    </div>
+        </div>
+      </div>
+      <div class="col-xs-12 form-group">
+        <button [disabled]="loginForm.pristine || loginForm.invalid" class="btn btn-success loginBtn"
+          type="submit">Login</button>
+      </div>
+    </form>
+  </div>
 </div>

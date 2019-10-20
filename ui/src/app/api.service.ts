@@ -15,6 +15,6 @@ export class ApiService {
   }
 
   public auth(password) {
-    return this.httpClient.post<any>(`${this.REST_API_SERVER}/auth`, { password });
+    return this.httpClient.post(`${this.REST_API_SERVER}/auth`, { password });
   }
 }
