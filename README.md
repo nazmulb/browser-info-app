@@ -9,9 +9,9 @@ An application that will collect statistical information from browsers and store
 ### Overview:
 
 It consists of three components/microservices:
-- Collector: data collection script, which will be placed on the websites.
-- API: server for data storage and processing.
-- UI: webserver interface providing statistics from the back-end.
+- **Collector:** data collection script, which will be placed on the websites.
+- **API:** server for data storage and processing.
+- **UI:** webserver interface providing statistics from the back-end.
 
 I used `node.js`, `nestJS`, `typescript`, `typeorm`, `MySql`, `swagger`, `JWT`, `jest` & `supertest` for back-end API. And `Angular 7` & `bootstrap` for UI.
 
@@ -65,6 +65,16 @@ npm start
 
 ### Run Collector:
 
-Open different browser with the following page:
+Open different browsers with the following page:
 
 `collector/index.html`
+
+Enjoy :)
+
+### Test Coverage Reports:
+
+<img alt="Test Coverage Report" src="https://raw.githubusercontent.com/nazmulb/browser-info-app/master/images/coverage1.png" width="900px" />
+
+<img alt="Test Coverage Report" src="https://raw.githubusercontent.com/nazmulb/browser-info-app/master/images/coverage2.png" width="900px" />
+
+<img alt="Report" src="https://raw.githubusercontent.com/nazmulb/browser-info-app/master/images/report.png" width="900px" />
