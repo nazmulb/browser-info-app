@@ -13,6 +13,8 @@ It consists of three components/microservices:
 - **API:** server for data storage and processing.
 - **UI:** webserver interface providing statistics from the back-end.
 
+<img alt="Components" src="https://raw.githubusercontent.com/nazmulb/browser-info-app/master/images/components.png" width="639px" />
+
 I used `node.js`, `nestJS`, `typescript`, `typeorm`, `MySql`, `swagger`, `JWT`, `jest` & `supertest` for back-end API. And `Angular 7` & `bootstrap` for UI.
 
 ### Setup:
@@ -75,6 +77,6 @@ Enjoy :)
 
 <img alt="Test Coverage Report" src="https://raw.githubusercontent.com/nazmulb/browser-info-app/master/images/coverage1.png" width="900px" />
 
-<img alt="Test Coverage Report" src="https://raw.githubusercontent.com/nazmulb/browser-info-app/master/images/coverage2.png" width="900px" />
+<img alt="Test Coverage Report" src="https://raw.githubusercontent.com/nazmulb/browser-info-app/master/images/coverage2.png" width="850px" />
 
 <img alt="Report" src="https://raw.githubusercontent.com/nazmulb/browser-info-app/master/images/report.png" width="900px" />
